@@ -25,7 +25,7 @@ namespace Sweepi.UserServiceAPI.Contollers
 
       [HttpGet]
       [Route("{userId}", Name = "GetByUserId")]
-      public async Task<IActionResult> GetByUserId(string userId)
+      public async Task<IActionResult> GetByUserIdAsync(string userId)
       {
         var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.UserId == userId);
 
@@ -41,7 +41,6 @@ namespace Sweepi.UserServiceAPI.Contollers
         {
           if (ModelState.IsValid) 
           {
-            var registeredUser = user;
             _dbContext.Add(user);
             await _dbContext.SaveChangesAsync();
             return CreatedAtRoute("GetByUserId", new { userId = user.UserId }, user);
@@ -52,6 +51,48 @@ namespace Sweepi.UserServiceAPI.Contollers
           ModelState.AddModelError("", "Unable to save changes");
           return StatusCode(StatusCodes.Status500InternalServerError);
           throw;
+        }
+      }
+
+      [HttpPut]
+      [Route("{userId}", Name = "UpdateByUserId")]
+      public async Task<IActionResult> UpdateUserAsync(string userId, [FromBody] User user)
+      {
+        if (userId != user.UserId) return BadRequest();
+
+        try
+        {
+            _dbContext.Update(user);
+            await _dbContext.SaveChangesAsync();
+            return CreatedAtRoute("UpdateByUserId", new { user = user }, user);
+        }
+        catch (DbUpdateException)
+        {
+            ModelState.AddModelError("", "Unable to save changes");
+            return StatusCode(StatusCodes.Status500InternalServerError);
+            throw;
+        }
+      }
+
+      [HttpDelete]
+      [Route("{userId}")]
+      public async Task<IActionResult> DeleteUserAsync(string userId)
+      {
+        try
+        {
+            var user = await _dbContext.Users.FindAsync(userId);
+
+            if (user == null) return NotFound();
+
+            _dbContext.Remove(user);
+            await _dbContext.SaveChangesAsync();
+            return NoContent();
+        }
+        catch (DbUpdateException)
+        {
+            ModelState.AddModelError("", "Unable to save changes");
+            return StatusCode(StatusCodes.Status500InternalServerError);
+            throw;
         }
       }
     }
