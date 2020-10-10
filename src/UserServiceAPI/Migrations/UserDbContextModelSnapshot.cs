@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Sweepi.UserServiceAPI.DataAccess;
+using Sweepi.UserServiceAPI.Data;
 
 namespace UserServiceAPI.Migrations
 {
@@ -20,7 +20,7 @@ namespace UserServiceAPI.Migrations
 
             modelBuilder.Entity("Sweepi.UserServiceAPI.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -38,7 +38,7 @@ namespace UserServiceAPI.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });

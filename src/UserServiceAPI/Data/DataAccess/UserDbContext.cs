@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sweepi.UserServiceAPI.Models;
 
-namespace Sweepi.UserServiceAPI.DataAccess
+namespace Sweepi.UserServiceAPI.Data
 {
   public class UserDbContext : DbContext
   {
@@ -14,7 +14,7 @@ namespace Sweepi.UserServiceAPI.DataAccess
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-      builder.Entity<User>().HasKey(u => u.UserId);
+      builder.Entity<User>().HasKey(u => u.Id);
       builder.Entity<User>().ToTable("User");
       base.OnModelCreating(builder);
     }

@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Sweepi.UserServiceAPI.Data;
 
-namespace Sweepi.UserServiceAPI.Models
+namespace Sweepi.UserServiceAPI.Data
 {
-    public class User : IEntity
+    public class UserCreateDTO : IEntity
     {
       [Key]
       public string Id { get; set; }

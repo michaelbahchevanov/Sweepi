@@ -9,8 +9,8 @@ using Sweepi.UserServiceAPI.Data;
 namespace UserServiceAPI.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20201008191643_Update1")]
-    partial class Update1
+    [Migration("20201010174019_Update2")]
+    partial class Update2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace UserServiceAPI.Migrations
 
             modelBuilder.Entity("Sweepi.UserServiceAPI.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -40,7 +40,7 @@ namespace UserServiceAPI.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });
