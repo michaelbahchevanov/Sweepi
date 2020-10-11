@@ -257,3 +257,9 @@ out/
 
 # local nuget folder
 nuget/
+
+# app settings
+appsettings.*
+
+# vscode folder
+.vscode
