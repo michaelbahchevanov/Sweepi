@@ -10,9 +10,8 @@ namespace Sweepi.UserServiceAPI.Contollers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController<TReadEntity, TWriteEntity, TEntity, TRepository> : ControllerBase
+    public class BaseController<TReadEntity, TEntity, TRepository> : ControllerBase
       where TReadEntity : class, IEntity
-      where TWriteEntity : class, IEntity
       where TEntity : class, IEntity
       where TRepository : IRepository<TEntity>
     {
@@ -25,22 +24,22 @@ namespace Sweepi.UserServiceAPI.Contollers
       }
 
       [HttpGet]
-      public async Task<ActionResult<List<TEntity>>> Get()
+      public async Task<ActionResult<List<TReadEntity>>> Get()
       {
         List<TEntity> entities = await _repository.GetAll();
 
-        return Ok();
+        return Ok(_mapper.Map<List<TReadEntity>>(entities));
       }
 
       [HttpGet]
       [Route("{id}", Name = "GetById")]
-      public async Task<ActionResult<TEntity>> Get(string id)
+      public async Task<ActionResult<TReadEntity>> Get(string id)
       {
         TEntity entity = await _repository.GetById(id);
 
         if (entity == null) return NotFound();
 
-        return Ok();
+        return Ok(_mapper.Map<TReadEntity>(entity));
       }
 
       [HttpPut]

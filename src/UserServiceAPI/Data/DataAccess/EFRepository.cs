@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace Sweepi.UserServiceAPI.Data
 {
-  public class EFRepository<TReadEntity, TWriteEntity, TEntity, TContext> : IRepository<TEntity>
+  public class EFRepository<TReadEntity, TEntity, TContext> : IRepository<TEntity>
     where TReadEntity : class, IEntity
-    where TWriteEntity : class, IEntity
     where TEntity : class, IEntity
     where TContext : DbContext
   {
