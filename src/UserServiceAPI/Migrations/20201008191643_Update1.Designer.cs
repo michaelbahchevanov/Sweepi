@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sweepi.UserServiceAPI.Data;
 
-namespace UserServiceAPI.Migrations
+namespace Sweepi.UserServiceAPI.Migrations
 {
     [DbContext(typeof(UserDbContext))]
     [Migration("20201008191643_Update1")]

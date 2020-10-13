@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Sweepi.UserServiceAPI</AssemblyName>
+    <RootNamespace>Sweepi.UserServiceAPI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

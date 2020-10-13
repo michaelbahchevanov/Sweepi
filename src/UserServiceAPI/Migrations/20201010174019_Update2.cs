@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace UserServiceAPI.Migrations
+namespace Sweepi.UserServiceAPI.Migrations
 {
     public partial class Update2 : Migration
     {

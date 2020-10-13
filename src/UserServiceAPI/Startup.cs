@@ -7,7 +7,7 @@ using Sweepi.UserServiceAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
-namespace UserServiceAPI
+namespace Sweepi.UserServiceAPI
 {
     public class Startup
     {
