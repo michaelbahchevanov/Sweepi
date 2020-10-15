@@ -2,25 +2,24 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-    - name: Install dependencies
-      working-directory: ./src/UserServiceAPI
-      run: dotnet restore
-    - name: Build
-      working-directory: ./src/UserServiceAPI
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      working-directory: ./src/UserServiceAPI
-      run: dotnet test --no-restore --verbosity normal
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+      - name: Install dependencies
+        working-directory: ./src/UserService/UserServiceAPI
+        run: dotnet restore
+      - name: Build
+        working-directory: ./src/UserService/UserServiceAPI
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        working-directory: ./src/UserService/UserServiceAPI.IntegrationTests
+        run: dotnet test --no-restore --verbosity normal
