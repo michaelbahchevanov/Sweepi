@@ -14,6 +14,7 @@ using Sweepi.UserServiceAPI.Models;
 using Sweepi.UserServiceAPI.Contollers;
 using Sweepi.UserServiceAPI.Data;
 using Moq;
+using System;
 
 namespace Sweepi.UserServiceAPI.IntegrationTests
 {
@@ -43,12 +44,24 @@ namespace Sweepi.UserServiceAPI.IntegrationTests
     [Fact]
     public async Task Get_By_Id_Should_Return_User_With_Id()
     {
+      var testUser = new User()
+      {
+        Id="test",
+        Name="Test",
+        Email="test@testmail.com",
+        Password="test"
+      };
+
+      var response = await _client.GetAsync("/api/users/test");
+      var json = await response.Content.ReadAsStringAsync();
+      var user = JsonConvert.DeserializeObject<User>(json);
       
+      user.Id.Should().NotBeNull().And.Be(testUser.Id);
     }
     [Fact]
     public async Task Get_By_Id_Should_Return_User_Not_Found()
     {
-
+      
     }
     [Fact]
     public async Task Put_Should_Return_No_Content_Result()
