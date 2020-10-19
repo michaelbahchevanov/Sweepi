@@ -69,12 +69,39 @@ namespace Sweepi.UserServiceAPI.IntegrationTests
     [Fact]
     public async Task Put_Should_Return_No_Content_Result()
     {
+      var request = new
+      {
+        Url = "/api/users/test",
+        Body = new User()
+        {
+          Id = "test",
+          Name = "Testing",
+          Email = "test@testmail.com",
+          Password = "root"
+        }
+      };
 
+      var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
+
+      response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
     [Fact]
     public async Task Put_Should_Return_Bad_Request_Result()
     {
+      var request = new
+      {
+        Url = "/api/users/not-valid",
+        Body = new User()
+        {
+          Id = "test",
+          Name = "Testing",
+          Email = "test@testmail.com",
+          Password = "root"
+        }
+      };
+      var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
+      response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     [Fact]
     public async Task Post_Should_Return_Created_Result()
