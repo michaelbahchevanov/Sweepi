@@ -15,6 +15,7 @@ using Sweepi.UserServiceAPI.Contollers;
 using Sweepi.UserServiceAPI.Data;
 using Moq;
 using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Sweepi.UserServiceAPI.IntegrationTests
 {
@@ -61,7 +62,9 @@ namespace Sweepi.UserServiceAPI.IntegrationTests
     [Fact]
     public async Task Get_By_Id_Should_Return_User_Not_Found()
     {
-      
+      var response = await _client.GetAsync("/api/users/not-valid");
+
+      response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
     [Fact]
     public async Task Put_Should_Return_No_Content_Result()
