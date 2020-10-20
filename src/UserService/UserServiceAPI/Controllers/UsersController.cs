@@ -1,15 +1,15 @@
 using Sweepi.UserServiceAPI.Models;
 using Sweepi.UserServiceAPI.Data;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
+using Sweepi.UserServiceAPI.Repository;
 
 namespace Sweepi.UserServiceAPI.Contollers
 {
     [Route("/api/[controller]")]
     [ApiController]
-    public class UsersController : BaseController<UserReadDTO, User, EFUserRepository>
+    public class UsersController : BaseController<User, UserRepository>
     {
-      public UsersController(EFUserRepository repository, IMapper mapper) : base(repository, mapper)
+      public UsersController(UserRepository repository) : base(repository)
       {
           
       }

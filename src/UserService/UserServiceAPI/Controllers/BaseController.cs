@@ -4,42 +4,39 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using AutoMapper;
+using Sweepi.UserServiceAPI.Repository;
 
 namespace Sweepi.UserServiceAPI.Contollers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController<TReadEntity, TEntity, TRepository> : ControllerBase
-      where TReadEntity : class, IEntity
+    public class BaseController<TEntity, TRepository> : ControllerBase
       where TEntity : class, IEntity
-      where TRepository : IRepository<TEntity>
+      where TRepository : IUserRepository<TEntity>
     {
       TRepository _repository;
-      IMapper _mapper;
-      public BaseController(TRepository repository, IMapper mapper)
+      public BaseController(TRepository repository)
       {
           _repository = repository;
-          _mapper = mapper;
       }
 
       [HttpGet]
-      public async Task<ActionResult<List<TReadEntity>>> Get()
+      public async Task<ActionResult<IEnumerable<TEntity>>> Get()
       {
-        List<TEntity> entities = await _repository.GetAll();
+        IEnumerable<TEntity> entities = await _repository.GetAll();
 
-        return Ok(_mapper.Map<List<TReadEntity>>(entities));
+        return Ok(entities);
       }
 
       [HttpGet]
       [Route("{id}", Name = "GetById")]
-      public async Task<ActionResult<TReadEntity>> Get(string id)
+      public async Task<ActionResult<TEntity>> Get(string id)
       {
         TEntity entity = await _repository.GetById(id);
 
         if (entity == null) return NotFound();
 
-        return Ok(_mapper.Map<TReadEntity>(entity));
+        return Ok(entity);
       }
 
       [HttpPut]

@@ -1,17 +1,17 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Sweepi.UserServiceAPI.Data;
 
-namespace Sweepi.UserServiceAPI.Data
+namespace Sweepi.UserServiceAPI.Repository
 {
-  public class EFRepository<TReadEntity, TEntity, TContext> : IRepository<TEntity>
-    where TReadEntity : class, IEntity
+  public class UserRepository<TEntity, TContext> : IUserRepository<TEntity>
     where TEntity : class, IEntity
     where TContext : DbContext
   {
 
     TContext _context;
-    public EFRepository(TContext context)
+    public UserRepository(TContext context)
     {
         _context = context;
     }
@@ -27,7 +27,7 @@ namespace Sweepi.UserServiceAPI.Data
       return entity;
     }
 
-    public async Task<List<TEntity>> GetAll()
+    public async Task<IEnumerable<TEntity>> GetAll()
     {
       return await _context.Set<TEntity>().ToListAsync();
     }

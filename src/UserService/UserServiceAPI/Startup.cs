@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sweepi.UserServiceAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+using Sweepi.UserServiceAPI.Repository;
 
 namespace Sweepi.UserServiceAPI
 {
@@ -23,10 +23,12 @@ namespace Sweepi.UserServiceAPI
         {
             services.AddDbContext<UserDbContext>(options => options
                 .UseSqlServer(Configuration.GetConnectionString("SweepiUserConnection")));
+
             services.AddControllers();
+
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.AddScoped<EFUserRepository>();
-            services.AddAutoMapper(typeof(Startup));
+            
+            services.AddScoped<UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
