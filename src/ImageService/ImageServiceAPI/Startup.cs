@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sweepi.ImageServiceAPI.Models;
+using Sweepi.ImageServiceAPI.Repository;
 
 namespace ImageServiceAPI
 {
@@ -32,6 +33,8 @@ namespace ImageServiceAPI
 
             services.AddSingleton<IImageDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<ImagesDatabaseSettings>>().Value);
+
+            services.AddSingleton<ImageRepository>();    
 
             services.AddControllers();
         }
