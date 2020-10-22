@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Sweepi.ImageServiceAPI.Models
 {
-    public class Image
+    public class Image : IEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
