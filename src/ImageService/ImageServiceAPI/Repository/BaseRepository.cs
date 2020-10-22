@@ -27,8 +27,11 @@ namespace Sweepi.ImageServiceAPI.Repository
     public async Task<TEntity> Delete(string id) =>
       await _entities.FindOneAndDeleteAsync(entity => entity.Id == id);
 
-    public async Task<IEnumerable<TEntity>> Get() => 
-      await _entities.Find(entity => true).ToListAsync();
+    public async Task<IEnumerable<TEntity>> Get()
+    {
+      var images = await _entities.Find(image => true).ToListAsync();
+      return images;
+    }
 
     public async Task<TEntity> Get(string id) => 
       await _entities.Find<TEntity>(entity => entity.Id == id).FirstOrDefaultAsync();
