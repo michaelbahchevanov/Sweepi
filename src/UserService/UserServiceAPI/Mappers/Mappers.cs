@@ -11,5 +11,11 @@ namespace Sweepi.UserServiceAPI.Mappers
             Id = source.Id,
             Name = source.Name
           };
+      
+      public static CreatedUserDTO MapToCreatedDTO(this User source)
+        => new CreatedUserDTO()
+          {
+            Id = source.Id
+          };
     }
 }

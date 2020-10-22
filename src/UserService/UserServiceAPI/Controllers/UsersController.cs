@@ -67,7 +67,7 @@ namespace Sweepi.UserServiceAPI.Contollers
           if (ModelState.IsValid)
           {
             await _repository.Create(user);
-            return CreatedAtRoute("GetById", new { id = user.Id }, user);
+            return CreatedAtRoute("GetById", new { id = user.Id }, user.MapToCreatedDTO());
           }
           return BadRequest();
         } 
