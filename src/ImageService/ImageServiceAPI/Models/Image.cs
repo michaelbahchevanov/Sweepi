@@ -10,6 +10,6 @@ namespace Sweepi.ImageServiceAPI.Models
         public string Id { get; set; }
         public string UserId { get; set; }
         public string ProductId { get; set; }
-        public byte[] ContentImage { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

@@ -8,7 +8,8 @@ namespace Sweepi.ImageServiceAPI.Mappers
     public static ImageCreatedDTO MapToDTO(this Image source)
       => new ImageCreatedDTO()
         {
-          Id = source.Id
+          Id = source.Id,
+          ImageUrl = source.ImageUrl
         };
   }
 }
