@@ -23,17 +23,17 @@ jobs:
         working-directory: ./src/UserService/UserServiceAPI.IntegrationTests
         run: dotnet test --no-restore --verbosity normal
 
-  docker-push:
+  docker-build:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Docker Login
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}   
+        DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}  
       run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Docker Build
       run: |
           docker build ./src/UserService/UserServiceAPI -t michaelbahchevanov1225/sweepi-users-service:latest
