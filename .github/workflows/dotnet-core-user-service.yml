@@ -27,16 +27,16 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: docker login
-      env:
-        DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}   
-        DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}  
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - uses: actions/checkout@v2
+      - name: docker login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Docker Build
-      run: |
+        run: |
           docker build ./src/UserService/UserServiceAPI -t michaelbahchevanov1225/sweepi-users-service:latest
       - name: Docker Push
-      run: |
+        run: |
           docker push michaelbahchevanov1225/sweepi-users-service:latest
