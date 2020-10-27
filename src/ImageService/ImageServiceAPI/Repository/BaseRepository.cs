@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
-using System.Linq;
 using Sweepi.ImageServiceAPI.Models;
 
 namespace Sweepi.ImageServiceAPI.Repository
