@@ -5,15 +5,15 @@ namespace Sweepi.UserServiceAPI.Mappers
 {
     public static class Mappers
     {
-      public static UserDTO MapToDTO(this User source) 
-        => new UserDTO() 
+      public static UserDto MapToDTO(this User source) 
+        => new UserDto() 
           {
             Id = source.Id,
             Name = source.Name
           };
       
-      public static CreatedUserDTO MapToCreatedDTO(this User source)
-        => new CreatedUserDTO()
+      public static CreatedUserDto MapToCreatedDTO(this User source)
+        => new CreatedUserDto()
           {
             Id = source.Id
           };

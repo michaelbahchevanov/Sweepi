@@ -9,8 +9,7 @@ namespace Sweepi.UserServiceAPI.Repository
     where TEntity : class, IEntity
     where TContext : DbContext
   {
-
-    TContext _context;
+    readonly TContext _context;
     public UserRepository(TContext context)
     {
         _context = context;

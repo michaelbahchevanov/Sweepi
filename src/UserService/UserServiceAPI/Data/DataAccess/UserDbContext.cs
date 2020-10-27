@@ -12,11 +12,11 @@ namespace Sweepi.UserServiceAPI.Data
 
     public DbSet<User> Users { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      builder.Entity<User>().HasKey(u => u.Id);
-      builder.Entity<User>().ToTable("User");
-      base.OnModelCreating(builder);
+      modelBuilder.Entity<User>().HasKey(u => u.Id);
+      modelBuilder.Entity<User>().ToTable("User");
+      base.OnModelCreating(modelBuilder);
     }
   }
 }

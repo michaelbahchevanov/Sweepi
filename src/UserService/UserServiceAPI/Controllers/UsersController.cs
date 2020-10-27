@@ -14,7 +14,7 @@ namespace Sweepi.UserServiceAPI.Contollers
     [ApiController]
     public class UsersController : ControllerBase
     {
-      UserRepository _repository;
+    readonly UserRepository _repository;
       public UsersController(UserRepository repository)
       {
           _repository = repository;
