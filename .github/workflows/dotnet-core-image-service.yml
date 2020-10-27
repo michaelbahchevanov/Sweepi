@@ -3,6 +3,8 @@ name: .NET Core ImageService
 on:
   push:
     branches: [master]
+    paths:
+      - './src/ImageService/**'
 
 jobs:
   build:

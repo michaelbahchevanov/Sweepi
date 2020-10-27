@@ -3,6 +3,8 @@ name: .NET Core UserService
 on:
   push:
     branches: [master]
+    paths:
+      - './src/UserService/**'
 
 jobs:
   build:
