@@ -1,0 +1,26 @@
+name: .NET Core ProductService
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - './src/ProductService/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+      - name: Install dependencies
+        working-directory: ./src/ProductService/ProductServiceAPI
+        run: dotnet restore
+      - name: Build
+        working-directory: ./src/ProductService/ProductServiceAPI
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        working-directory: ./src/ProductService/ProductServiceAPI.IntegrationTests
+        run: dotnet test --no-restore --verbosity normal
