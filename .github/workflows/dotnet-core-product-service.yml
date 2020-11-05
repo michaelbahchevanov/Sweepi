@@ -24,3 +24,21 @@ jobs:
       - name: Test
         working-directory: ./src/ProductService/ProductServiceAPI.IntegrationTests
         run: dotnet test --no-restore --verbosity normal
+
+  docker-build:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker Login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Docker Build
+        run: |
+          docker build ./src/ProductService/ProductServiceAPI -t michaelbahchevanov1225/sweepi-products-service:latest
+      - name: Docker Push
+        run: |
+          docker push michaelbahchevanov1225/sweepi-products-service:latest
