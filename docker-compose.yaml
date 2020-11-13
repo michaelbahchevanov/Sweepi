@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  userserviceapi:
+    image: michaelbahchevanov1225/sweepi-users-service:latest
+    build: src/UserService/UserServiceAPI
+    ports:
+      - '5100:5100'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  imageserviceapi:
+    image: michaelbahchevanov1225/sweepi-images-service:latest
+    build: src/ImageService/ImageServiceAPI
+    ports:
+      - '5200:5200'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  productserviceapi:
+    image: michaelbahchevanov1225/sweepi-products-service
+    build: src/ProductService/ProductServiceAPI
+    ports:
+      - '5300:5300'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
