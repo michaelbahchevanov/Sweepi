@@ -2,7 +2,7 @@ name: .NET Core ProductService
 
 on:
   push:
-    branches: [master]
+    branches: [develop]
     paths:
       - 'src/ProductService/**'
 
@@ -36,6 +36,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Docker Push
+      - name: Docker Build
         run: |
-          docker push michaelbahchevanov1225/sweepi-products-service:latest
+          docker build ./src/ProductService/ProductServiceAPI -t michaelbahchevanov1225/sweepi-products-service:latest
