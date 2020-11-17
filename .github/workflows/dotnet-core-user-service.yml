@@ -36,9 +36,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Docker Build
-        run: |
-          docker build ./src/UserService/UserServiceAPI -t michaelbahchevanov1225/sweepi-users-service:latest
       - name: Docker Push
         run: |
           docker push michaelbahchevanov1225/sweepi-users-service:latest

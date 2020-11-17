@@ -1,14 +1,15 @@
-name: .NET Core ProductService
+name: .NET Core ImageService
 
 on:
   push:
-    branches: [master]
+    branches: [develop]
     paths:
-      - 'src/ProductService/**'
+      - 'src/ImageService/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET Core
@@ -16,13 +17,13 @@ jobs:
         with:
           dotnet-version: 3.1.301
       - name: Install dependencies
-        working-directory: ./src/ProductService/ProductServiceAPI
+        working-directory: ./src/ImageService/ImageServiceAPI
         run: dotnet restore
       - name: Build
-        working-directory: ./src/ProductService/ProductServiceAPI
+        working-directory: ./src/ImageService/ImageServiceAPI
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        working-directory: ./src/ProductService/ProductServiceAPI.IntegrationTests
+        working-directory: ./src/ImageService/ImageServiceAPI.IntegrationTests
         run: dotnet test --no-restore --verbosity normal
 
   docker-build:
@@ -30,12 +31,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Docker Login
+      - name: docker login
         env:
           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Docker Push
+      - name: Docker Build
         run: |
-          docker push michaelbahchevanov1225/sweepi-products-service:latest
+          docker build ./src/ImageService/ImageServiceAPI -t michaelbahchevanov1225/sweepi-images-service:latest

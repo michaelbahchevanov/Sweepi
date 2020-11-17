@@ -1,10 +1,10 @@
-name: .NET Core ProductService
+name: .NET Core UserService
 
 on:
   push:
-    branches: [master]
+    branches: [develop]
     paths:
-      - 'src/ProductService/**'
+      - 'src/UserService/**'
 
 jobs:
   build:
@@ -16,13 +16,13 @@ jobs:
         with:
           dotnet-version: 3.1.301
       - name: Install dependencies
-        working-directory: ./src/ProductService/ProductServiceAPI
+        working-directory: ./src/UserService/UserServiceAPI
         run: dotnet restore
       - name: Build
-        working-directory: ./src/ProductService/ProductServiceAPI
+        working-directory: ./src/UserService/UserServiceAPI
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        working-directory: ./src/ProductService/ProductServiceAPI.IntegrationTests
+        working-directory: ./src/UserService/UserServiceAPI.IntegrationTests
         run: dotnet test --no-restore --verbosity normal
 
   docker-build:
@@ -36,6 +36,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Docker Push
+      - name: Docker Build
         run: |
-          docker push michaelbahchevanov1225/sweepi-products-service:latest
+          docker build ./src/UserService/UserServiceAPI -t michaelbahchevanov1225/sweepi-users-service:latest
