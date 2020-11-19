@@ -5,12 +5,12 @@ using Sweepi.UserServiceAPI.Data;
 
 namespace Sweepi.UserServiceAPI.Repository
 {
-  public class UserRepository<TEntity, TContext> : IUserRepository<TEntity>
+  public class Repository<TEntity, TContext> : IUserRepository<TEntity>
     where TEntity : class, IEntity
     where TContext : DbContext
   {
     readonly TContext _context;
-    public UserRepository(TContext context)
+    public Repository(TContext context)
     {
         _context = context;
     }

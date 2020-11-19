@@ -9,8 +9,8 @@ using Sweepi.UserServiceAPI.Data;
 namespace Sweepi.UserServiceAPI.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20201008145025_Initial")]
-    partial class Initial
+    [Migration("20201117182916_Latest")]
+    partial class Latest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,9 +20,9 @@ namespace Sweepi.UserServiceAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
 
-            modelBuilder.Entity("Sweepi.UserServiceAPI.Model.User", b =>
+            modelBuilder.Entity("Sweepi.UserServiceAPI.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -37,10 +37,10 @@ namespace Sweepi.UserServiceAPI.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });
