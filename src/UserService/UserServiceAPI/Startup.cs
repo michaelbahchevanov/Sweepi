@@ -6,10 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Sweepi.UserServiceAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Sweepi.UserServiceAPI.Repository;
-using Sweepi.UserServiceAPI.Services;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Sweepi.UserServiceAPI
 {
