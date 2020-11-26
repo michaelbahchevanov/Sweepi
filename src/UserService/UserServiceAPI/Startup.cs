@@ -22,7 +22,6 @@ namespace Sweepi.UserServiceAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<UserDbContext>(options => options
@@ -33,26 +32,6 @@ namespace Sweepi.UserServiceAPI
                 .AllowAnyHeader()));
             
             services.AddControllers();
-
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                }
-            ).AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Secret").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                }
-            );
-            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
             
