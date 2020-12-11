@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
+import { Link as RouteLink } from 'react-router-dom';
+import { authService } from '@services';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,9 +34,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginForm() {
+export const Login = ({ history }) => {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    e.target.reset();
+    console.log(data);
+
+    authService
+      .login(data.email, data.password)
+      .then((res) => console.log(res))
+      .then(() => history.push('/'))
+      .catch((error) => console.log(error));
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -47,7 +61,7 @@ export default function LoginForm() {
         <form
           className={classes.form}
           noValidate
-          onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <TextField
             variant='outlined'
@@ -95,18 +109,18 @@ export default function LoginForm() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href='#' variant='body2'>
-                Forgot password?
-              </Link>
+              <RouteLink to='/reset-password'>
+                <Link>Forgot password?</Link>
+              </RouteLink>
             </Grid>
             <Grid item>
-              <Link href='#' variant='body2'>
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <RouteLink to='/register'>
+                <Link>{"Don't have an account? Sign Up"}</Link>
+              </RouteLink>
             </Grid>
           </Grid>
         </form>
       </div>
     </Container>
   );
-}
+};

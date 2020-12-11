@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
+import { Link as RouterLink } from 'react-router-dom';
+import { authService } from '@services';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,9 +32,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RegisterForm() {
+export const Register = ({ history }) => {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    e.target.reset();
+    authService
+      .register(data.email, data.password)
+      .then(() => history.push('/'))
+      .catch((error) => console.log(error));
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -45,22 +56,9 @@ export default function RegisterForm() {
         <form
           className={classes.form}
           noValidate
-          onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                inputRef={register}
-                autoComplete='fname'
-                name='firstName'
-                variant='outlined'
-                required
-                fullWidth
-                id='firstName'
-                label='First Name'
-                autoFocus
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 inputRef={register}
@@ -98,13 +96,13 @@ export default function RegisterForm() {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='#' variant='body2'>
-                Already have an account? Sign in
-              </Link>
+              <RouterLink to='/login'>
+                <Link>Already have an account? Sign in</Link>
+              </RouterLink>
             </Grid>
           </Grid>
         </form>
       </div>
     </Container>
   );
-}
+};

@@ -1,12 +1,15 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './components';
+import { App } from './App';
+import { AuthProvider } from './context';
 
 const root = document.getElementById('root');
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </StrictMode>,
   root
 );
