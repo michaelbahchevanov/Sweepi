@@ -36,9 +36,7 @@ function AuthProvider({ children }) {
 }
 
 function useAuthState() {
-  console.log('cum1');
   const state = React.useContext(AuthContext);
-  console.log('cum2' + state);
   const isPending = state.status === 'pending';
   const isError = state.status === 'error';
   const isSuccess = state.status === 'success';
