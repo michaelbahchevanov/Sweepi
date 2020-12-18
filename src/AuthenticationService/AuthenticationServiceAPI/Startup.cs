@@ -35,6 +35,10 @@ namespace AuthenticationServiceAPI
             Configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
 
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()));
+
             services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddControllers();
@@ -71,6 +75,8 @@ namespace AuthenticationServiceAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
 
             app.UseRouting();
 
