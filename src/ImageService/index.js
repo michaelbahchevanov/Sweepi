@@ -14,7 +14,7 @@ const api = require('./api/v1/router');
 
 const app = express();
 
-const connection = `mongodb+srv://dbsensei:1qazZAQ!@sweepi-images-cluster.tr5xn.mongodb.net/sweepi-images?retryWrites=true&w=majority`;
+const connection = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sweepi-images-cluster.tr5xn.mongodb.net/sweepi-images?retryWrites=true&w=majority`;
 
 mongoose.connect(
   connection,
