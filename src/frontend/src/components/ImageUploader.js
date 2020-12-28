@@ -4,11 +4,8 @@ import axios from 'axios';
 
 export const ImageUploader = () => {
   const handleFileSelect = (file) => {
-    console.log('File changed: ', file);
     if (file) {
-      file.progress((info) => console.log('File progress: ', info.progress));
       file.done(async (info) => {
-        console.log('File uploaded: ', info);
         const req = await axios.post(
           'http://localhost:6969/api/v1/images',
           {

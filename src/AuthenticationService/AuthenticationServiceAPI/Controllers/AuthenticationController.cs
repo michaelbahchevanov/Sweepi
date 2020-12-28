@@ -41,6 +41,7 @@ namespace Sweepi.UserServiceAPI.Controllers
 
             return Ok(new AuthSuccessResponse
             {
+                UserId = response.UserId,
                 Token = response.Token,
                 RefreshToken = response.RefreshToken
             });
@@ -61,6 +62,7 @@ namespace Sweepi.UserServiceAPI.Controllers
 
             return Ok(new AuthSuccessResponse
             {
+                UserId = response.UserId,
                 Token = response.Token,
                 RefreshToken = response.RefreshToken
             });

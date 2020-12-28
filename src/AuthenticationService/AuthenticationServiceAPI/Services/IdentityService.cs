@@ -170,7 +170,8 @@ namespace Sweepi.AuthenticationServiceAPI.Services
             {
                 Success = true,
                 Token = tokenHandler.WriteToken(token),
-                RefreshToken = refreshToken.Token
+                RefreshToken = refreshToken.Token,
+                UserId = user.Id
             };
         }
         private ClaimsPrincipal GetPrincipalFromToken(string token)

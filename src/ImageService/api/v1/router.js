@@ -7,12 +7,27 @@ router.post('/images', async (req, res, next) => {
   try {
     const data = req.body;
     const image = new imageModel({
-      UserId: 'yes-no',
-      ProductId: 'yes-no-yes',
+      UserId: data.userId,
+      ProductId: data.productId,
       ImageUrl: data.imageUrl,
     });
     const createdEntry = await image.save();
     res.json(createdEntry);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/images/:id', async (req, res, next) => {
+  try {
+    const imageId = req.params.id;
+
+    imageModel
+      .findById(imageId)
+      .then((data) => res.status(200).json({ imageUrl: data.ImageUrl }))
+      .catch(() => {
+        res.status(404).json({ errorMessage: 'Not found' });
+      });
   } catch (error) {
     next(error);
   }
