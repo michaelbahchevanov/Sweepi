@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Widget } from '@uploadcare/react-widget';
 import axios from 'axios';
+import { getUserId } from '../services/user.service';
 
 export const ImageUploader = () => {
   const handleFileSelect = (file) => {
     if (file) {
       file.done(async (info) => {
+        const userId = await getUserId();
         const req = await axios.post(
           'http://localhost:6969/api/v1/images',
           {
@@ -14,6 +16,7 @@ export const ImageUploader = () => {
             isStored: info.isStored,
             name: info.name,
             size: info.size,
+            userId: userId,
           },
           {
             headers: {
@@ -21,7 +24,6 @@ export const ImageUploader = () => {
             },
           }
         );
-        return req;
       });
     }
   };
@@ -33,7 +35,6 @@ export const ImageUploader = () => {
   return (
     <div>
       <p>
-        <label htmlFor='file'>You've just uploaded:</label>{' '}
         <Widget
           publicKey='447ab6367441af85d8d1'
           id='file'

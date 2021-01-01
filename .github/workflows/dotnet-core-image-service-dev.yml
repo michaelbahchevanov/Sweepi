@@ -1,42 +1,42 @@
-name: .NET Core ImageService
+# name: .NET Core ImageService
 
-on:
-  push:
-    branches: [develop]
-    paths:
-      - 'src/ImageService/**'
+# on:
+#   push:
+#     branches: [develop]
+#     paths:
+#       - 'src/ImageService/**'
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.301
-      - name: Install dependencies
-        working-directory: ./src/ImageService/ImageServiceAPI
-        run: dotnet restore
-      - name: Build
-        working-directory: ./src/ImageService/ImageServiceAPI
-        run: dotnet build --configuration Release --no-restore
-      - name: Test
-        working-directory: ./src/ImageService/ImageServiceAPI.IntegrationTests
-        run: dotnet test --no-restore --verbosity normal
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Setup .NET Core
+#         uses: actions/setup-dotnet@v1
+#         with:
+#           dotnet-version: 3.1.301
+#       - name: Install dependencies
+#         working-directory: ./src/ImageService/ImageServiceAPI
+#         run: dotnet restore
+#       - name: Build
+#         working-directory: ./src/ImageService/ImageServiceAPI
+#         run: dotnet build --configuration Release --no-restore
+#       - name: Test
+#         working-directory: ./src/ImageService/ImageServiceAPI.IntegrationTests
+#         run: dotnet test --no-restore --verbosity normal
 
-  docker-build:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: docker login
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Docker Build
-        run: |
-          docker build ./src/ImageService/ImageServiceAPI -t michaelbahchevanov1225/sweepi-images-service:latest
+#   docker-build:
+#     needs: [build]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: docker login
+#         env:
+#           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+#           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+#         run: |
+#           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+#       - name: Docker Build
+#         run: |
+#           docker build ./src/ImageService/ImageServiceAPI -t michaelbahchevanov1225/sweepi-images-service:latest
