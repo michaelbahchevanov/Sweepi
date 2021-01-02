@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import { Home, Login, Register, PageNotFound } from '@pages';
+import { Landing, Login, Register, PageNotFound } from '@pages';
 
 export const UnauthenticatedRoutes = () => {
   return (
@@ -18,7 +18,7 @@ export const UnauthenticatedRoutes = () => {
           </div>
         </header>
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={Landing} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='*' component={PageNotFound} />
