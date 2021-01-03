@@ -2,7 +2,6 @@ import React from 'react';
 import Background from '../images/Background.svg';
 import { LogoOrange } from '../images/Logo-orange';
 import { Link } from 'react-router-dom';
-import { Card } from '@components';
 
 export const Landing = () => {
   return (
@@ -52,7 +51,6 @@ export const Landing = () => {
           </div>
         </div>
       </div>
-      <Card />
     </div>
   );
 };

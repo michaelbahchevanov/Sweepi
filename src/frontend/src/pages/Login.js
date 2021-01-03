@@ -42,14 +42,12 @@ export const Login = ({ history }) => {
             placeholder='Password'
           />
 
-          <Link to='/'>
-            <button
-              type='submit'
-              className='w-full text-center py-3 rounded bg-yellow-500 text-black hover:bg-green-dark focus:outline-none my-1'
-            >
-              Sign in
-            </button>
-          </Link>
+          <button
+            type='submit'
+            className='w-full text-center py-3 rounded bg-yellow-500 text-black hover:bg-green-dark focus:outline-none my-1'
+          >
+            Sign in
+          </button>
         </form>
 
         <div className='text-grey-dark mt-6'>

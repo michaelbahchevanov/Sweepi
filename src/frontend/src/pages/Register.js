@@ -47,19 +47,16 @@ export const Register = ({ history }) => {
 
           <input
             type='password'
-            ref={register}
             className='block border border-gray-300 w-full p-3 rounded mb-4 bg-gray-100 focus:bg-gray-50 focus:outline-none focus:border-gray-600'
             name='password'
             placeholder='Confirm Password'
           />
-          <Link to='/'>
-            <button
-              type='submit'
-              className='w-full text-center py-3 rounded bg-yellow-500 text-black hover:bg-green-dark focus:outline-none my-1'
-            >
-              Sign up
-            </button>
-          </Link>
+          <button
+            type='submit'
+            className='w-full text-center py-3 rounded bg-yellow-500 text-black hover:bg-green-dark focus:outline-none my-1'
+          >
+            Sign up
+          </button>
         </form>
 
         <div className='text-grey-dark mt-6'>
