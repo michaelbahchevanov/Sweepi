@@ -1,6 +1,8 @@
 import React from 'react';
 import Background from '../images/Background.svg';
 import { LogoOrange } from '../images/Logo-orange';
+import { Link } from 'react-router-dom';
+import { Card } from '@components';
 
 export const Landing = () => {
   return (
@@ -12,11 +14,15 @@ export const Landing = () => {
         }}
       >
         <div className='flex flex-row xs:flex-col w-full justify-between items-center'>
-          <LogoOrange className='h-full w-32' />
+          <Link to='/'>
+            <LogoOrange className='h-full w-32' />
+          </Link>
           <div className='pt-7'>
-            <button className='text-md text-yellow-500 bg-white px-7 py-2 xs:px-10 xs:w-48'>
-              Sign in
-            </button>
+            <Link to='/login'>
+              <div className='text-md text-center text-yellow-500 bg-white px-7 py-2 xs:px-10 xs:w-48 focus:outline-none'>
+                Sign in
+              </div>
+            </Link>
           </div>
         </div>
 
@@ -38,12 +44,15 @@ export const Landing = () => {
           </div>
 
           <div className='mt-24 xs:w-72'>
-            <button className='bg-yellow-500 text-lg text-white border-yellow-700 rounded-full py-3 px-12 xs:w-full'>
-              Start tracking now!
-            </button>
+            <Link to='register'>
+              <div className='bg-yellow-500 text-lg text-center text-white border-yellow-700 rounded-full py-3 px-12 xs:w-full focus:outline-none animate-pulse'>
+                Start tracking now!
+              </div>
+            </Link>
           </div>
         </div>
       </div>
+      <Card />
     </div>
   );
 };

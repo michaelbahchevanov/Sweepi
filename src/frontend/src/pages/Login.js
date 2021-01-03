@@ -18,7 +18,7 @@ export const Login = ({ history }) => {
   };
 
   return (
-    <div className='bg-grey-lighter min-h-screen flex flex-col'>
+    <div className='bg-gray-100 min-h-screen flex flex-col'>
       <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
         <form
           className='bg-white px-6 py-8 rounded shadow-md text-black w-full border border-gray-300'
@@ -42,12 +42,14 @@ export const Login = ({ history }) => {
             placeholder='Password'
           />
 
-          <button
-            type='submit'
-            className='w-full text-center py-3 rounded bg-yellow-500 text-black hover:bg-green-dark focus:outline-none my-1'
-          >
-            Sign in
-          </button>
+          <Link to='/'>
+            <button
+              type='submit'
+              className='w-full text-center py-3 rounded bg-yellow-500 text-black hover:bg-green-dark focus:outline-none my-1'
+            >
+              Sign in
+            </button>
+          </Link>
         </form>
 
         <div className='text-grey-dark mt-6'>

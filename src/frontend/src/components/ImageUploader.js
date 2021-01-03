@@ -8,7 +8,7 @@ export const ImageUploader = () => {
     if (file) {
       file.done(async (info) => {
         const userId = await getUserId();
-        const req = await axios.post(
+        await axios.post(
           'http://localhost:6969/api/v1/images',
           {
             imageUrl: info.cdnUrl,
