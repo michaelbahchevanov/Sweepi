@@ -33,6 +33,19 @@ router.get('/images/:id', async (req, res, next) => {
   }
 });
 
+router.post('/images/all', async (req, res, next) => {
+  try {
+    const userId = req.body.userId;
+    const user = await imageModel.findOne({ UserId: userId });
+
+    if (!user) res.status(401).json({ errorMessage: 'Bad Request' });
+
+    return await res.status(200).json({ imageUrl: user.ImageUrl });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/', async (req, res, next) => {
   try {
     const message = { message: 'This is the index page 🚀🚀🚀' };
