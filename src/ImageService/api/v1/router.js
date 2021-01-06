@@ -38,7 +38,7 @@ router.post('/images/all', async (req, res, next) => {
     const userId = req.body.userId;
     const data = await imageModel.findOne({ UserId: userId });
 
-    if (!data) res.status(401).json({ errorMessage: 'Bad Request' });
+    if (!data) res.status(400).json({ errorMessage: 'Bad Request' });
 
     return await res
       .status(200)
