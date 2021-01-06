@@ -26,7 +26,7 @@ router.get('/images/:id', async (req, res, next) => {
       .findById(imageId)
       .then(res.status(200).json({ imageUrl: data.ImageUrl }))
       .catch(() => {
-        res.status(404).json({ errorMessage: 'Not found' });
+        res.status(404).json({ errorMessage: 'Not foun' });
       });
   } catch (error) {
     next(error);
