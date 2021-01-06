@@ -5,12 +5,10 @@ import { Home, PageNotFound } from '@pages';
 export const AuthenticatedRoutes = () => {
   return (
     <BrowserRouter>
-      <div>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='*' component={PageNotFound} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='*' component={PageNotFound} />
+      </Switch>
     </BrowserRouter>
   );
 };

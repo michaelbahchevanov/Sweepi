@@ -1,42 +1,34 @@
-# name: .NET Core ImageService
+name: Node ImageService
 
-# on:
-#   push:
-#     branches: [master]
-#     paths:
-#       - 'src/ImageService/**'
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'src/ImageService/**'
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Setup .NET Core
-#         uses: actions/setup-dotnet@v1
-#         with:
-#           dotnet-version: 3.1.301
-#       - name: Install dependencies
-#         working-directory: ./src/ImageService/ImageServiceAPI
-#         run: dotnet restore
-#       - name: Build
-#         working-directory: ./src/ImageService/ImageServiceAPI
-#         run: dotnet build --configuration Release --no-restore
-#       - name: Test
-#         working-directory: ./src/ImageService/ImageServiceAPI.IntegrationTests
-#         run: dotnet test --no-restore --verbosity normal
+    steps:
+      - name: Setup
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: yarn install
+      - name: Run tests
+        run: yarn run test
 
-#   docker-build:
-#     needs: [build]
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: docker login
-#         env:
-#           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-#           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-#         run: |
-#           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-#       - name: Docker Push
-#         run: |
-#           docker push michaelbahchevanov1225/sweepi-images-service:latest
+  docker-build:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Docker Build
+        run: |
+          docker build ./src/ImageService -t michaelbahchevanov1225/sweepi-images-service:latest

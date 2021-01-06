@@ -1,0 +1,38 @@
+name: .NET Core AuthenticationService
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - 'src/AuthenticationService/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+      - name: Install dependencies
+        working-directory: ./src/AuthenticationService/AuthenticationServiceAPI
+        run: dotnet restore
+      - name: Build
+        working-directory: ./src/AuthenticationService/AuthenticationServiceAPI
+        run: dotnet build --configuration Release --no-restore
+
+  docker-build:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker Login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Docker Push
+        run: |
+          docker push michaelbahchevanov1225/sweepi-auth-service:latest

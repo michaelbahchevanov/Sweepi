@@ -1,23 +1,12 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faStar } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 
-export const Card = ({
-  image = 'https://picsum.photos/400',
-  name = 'Charger',
-}) => {
-  const [tempImage, setImage] = React.useState();
-
-  React.useEffect(() => {
-    const req = axios.get('https://picsum.photos/400');
-    req.then((data) => setImage(data.config.url));
-  }, []);
-
+export const Card = ({ url = 'https://picsum.photos/400', name = 'None' }) => {
   return (
     <div
-      style={{ backgroundImage: `url(${tempImage})` }}
-      className='container h-48 w-64 bg-no-repeat bg-cover relative'
+      style={{ backgroundImage: `url(${url})` }}
+      className='container h-48 w-64 bg-no-repeat bg-cover relative mx-2 my-1'
     >
       <div className='flex flex-row w-full min-w-full justify-between items-center px-7 py-5'>
         <FontAwesomeIcon
