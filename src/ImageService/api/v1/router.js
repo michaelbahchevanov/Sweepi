@@ -24,7 +24,7 @@ router.get('/images/:id', async (req, res, next) => {
 
     imageModel
       .findById(imageId)
-      .then((data) => res.status(200).json({ imageUrl: data.ImageUrl }))
+      .then(res.status(200).json({ imageUrl: data.ImageUrl }))
       .catch(() => {
         res.status(404).json({ errorMessage: 'Not found' });
       });
@@ -36,11 +36,13 @@ router.get('/images/:id', async (req, res, next) => {
 router.post('/images/all', async (req, res, next) => {
   try {
     const userId = req.body.userId;
-    const user = await imageModel.findOne({ UserId: userId });
+    const data = await imageModel.findOne({ UserId: userId });
 
-    if (!user) res.status(401).json({ errorMessage: 'Bad Request' });
+    if (!data) res.status(401).json({ errorMessage: 'Bad Request' });
 
-    return await res.status(200).json({ imageUrl: user.ImageUrl });
+    return await res
+      .status(200)
+      .json({ imageUrl: data.ImageUrl, id: data._id });
   } catch (error) {
     next(error);
   }
