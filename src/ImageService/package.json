@@ -14,7 +14,8 @@
     "morgan": "^1.10.0"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "yarn test"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
