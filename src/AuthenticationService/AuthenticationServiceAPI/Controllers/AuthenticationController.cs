@@ -25,7 +25,7 @@ namespace Sweepi.UserServiceAPI.Controllers
             {
                 return BadRequest(new AuthFailResponse
                 {
-                    Errors = ModelState.Values.SelectMany(y => y.Errors.Select(x => x.ErrorMessage))
+                    Errors = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage))
                 });
             }
 

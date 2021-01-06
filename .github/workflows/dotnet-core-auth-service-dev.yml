@@ -33,6 +33,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Docker Push
+      - name: Docker Build
         run: |
-          docker push michaelbahchevanov1225/sweepi-auth-service:latest
+          docker build ./src/AuthenticationService/AuthenticationServiceAPI -t michaelbahchevanov1225/sweepi-auth-service:latest
