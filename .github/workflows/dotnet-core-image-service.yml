@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Run tests
-        run: yarn run test
+        run: yarn test
 
   docker-build:
     needs: [build]
