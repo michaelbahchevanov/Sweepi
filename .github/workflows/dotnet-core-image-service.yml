@@ -10,10 +10,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependencies
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
         run: yarn install
+      - name: Run Tests
+        run: yarn test
 
   docker-build:
     needs: [build]
@@ -26,9 +36,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Tag Image
-        run: |
-          docker tag michaelbahchevanov1225/sweepi-images-service:latest
       - name: Docker Push
         run: |
           docker push michaelbahchevanov1225/sweepi-images-service:latest
