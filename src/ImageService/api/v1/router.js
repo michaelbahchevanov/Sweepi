@@ -50,7 +50,7 @@ router.post('/images/all', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const message = { message: 'This is the index page 🚀' };
+    const message = { message: 'This is the index page 🚀🚀🚀' };
     res.status(200).json(message);
   } catch (error) {
     next(error);
