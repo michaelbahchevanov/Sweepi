@@ -47,6 +47,11 @@ const fakeData = [
     imageUrl: 'https://picsum.photos/400',
     name: 'Socks',
   },
+  {
+    id: '6d48aed5-d66d-46d6-a7b9-c396404f5480',
+    imageUrl: 'https://picsum.photos/400',
+    name: 'Potatoes',
+  },
 ];
 
 const URL = '';
