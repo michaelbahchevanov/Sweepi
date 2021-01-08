@@ -18,16 +18,18 @@ router.post('/images', async (req, res, next) => {
   }
 });
 
-router.get('/images/:id', async (req, res, next) => {
+router.delete('/images', async (req, res, next) => {
   try {
-    const imageId = req.params.id;
+    const data = req.body;
 
-    imageModel
-      .findById(imageId)
-      .then(res.status(200).json({ imageUrl: data.ImageUrl }))
-      .catch(() => {
-        res.status(404).json({ errorMessage: 'Not found' });
-      });
+    if (!data.id) res.sendStatus(400);
+
+    const image = await imageModel.findById({ _id: data.id });
+
+    if (!image) res.sendStatus(404);
+
+    await image.remove();
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }
