@@ -26,6 +26,8 @@ namespace ProductServiceAPI
 
             services.AddControllers();
 
+            services.AddMvc().AddNewtonsoftJson();
+
             services.AddScoped<ProductRepository>();
         }
 

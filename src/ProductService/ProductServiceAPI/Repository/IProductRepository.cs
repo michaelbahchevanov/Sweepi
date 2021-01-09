@@ -7,7 +7,7 @@ namespace Sweepi.ProductServiceAPI.Repository
   public interface IProductRepository<TEntity>
     where TEntity : class, IEntity
   {
-    Task<IEnumerable<TEntity>> GetAll();
+    Task<IEnumerable<TEntity>> GetAll(string userId);
     Task<TEntity> GetById(string id);
     Task<TEntity> Create(TEntity entity);
     Task<TEntity> Update(TEntity entity);

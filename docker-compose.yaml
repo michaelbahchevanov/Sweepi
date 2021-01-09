@@ -10,16 +10,22 @@ services:
 
   imageserviceapi:
     image: michaelbahchevanov1225/sweepi-images-service:latest
-    build: src/ImageService/ImageServiceAPI
+    build: src/ImageService
     ports:
-      - '5200:5200'
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - '6969:6969'
 
   productserviceapi:
     image: michaelbahchevanov1225/sweepi-products-service
     build: src/ProductService/ProductServiceAPI
     ports:
       - '5300:5300'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  authenticationserviceapi:
+    image: michaelbahchevanov1225/sweepi-auth-service:latest
+    build: src/AuthenticationService/AuthenticationServiceAPI
+    ports:
+      - '42069:42069'
     environment:
       - ASPNETCORE_ENVIRONMENT=Production

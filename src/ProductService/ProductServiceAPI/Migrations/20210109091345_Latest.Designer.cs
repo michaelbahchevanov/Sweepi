@@ -10,8 +10,8 @@ using Sweepi.ProductServiceAPI.Data;
 namespace Sweepi.ProductServiceAPI.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20201105113449_Initial")]
-    partial class Initial
+    [Migration("20210109091345_Latest")]
+    partial class Latest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,10 +24,10 @@ namespace Sweepi.ProductServiceAPI.Migrations
             modelBuilder.Entity("Sweepi.ProductServiceAPI.Models.Product", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -41,6 +41,10 @@ namespace Sweepi.ProductServiceAPI.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

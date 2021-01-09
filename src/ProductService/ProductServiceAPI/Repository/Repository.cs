@@ -2,12 +2,13 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Sweepi.ProductServiceAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Sweepi.ProductServiceAPI.Repository
 {
   public class ProductRepository<TEntity, TContext> : IProductRepository<TEntity>
     where TEntity : class, IEntity
-    where TContext : DbContext
+    where TContext : ProductDbContext
   {
 
     readonly TContext _context;
@@ -35,21 +36,21 @@ namespace Sweepi.ProductServiceAPI.Repository
       return entity;
     }
 
-    public async Task<IEnumerable<TEntity>> GetAll()
+    public async Task<IEnumerable<TEntity>> GetAll(string userId)
     {
-      return await _context.Set<TEntity>().ToListAsync();
+            return await _context.Set<TEntity>().Where(x => x.UserId == userId).ToListAsync();
     }
 
     public async Task<TEntity> GetById(string id)
     {
-      return await _context.Set<TEntity>().FindAsync(id);
+            return await _context.Set<TEntity>().FirstAsync(x => x.UserId == id);
     }
 
     public async Task<TEntity> Update(TEntity entity)
     {
-      _context.Entry(entity).State = EntityState.Modified;
-      await _context.SaveChangesAsync();
-      return entity;
+            _context.Entry(await _context.Products.FirstOrDefaultAsync(x => x.Id == entity.Id)).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
+            return entity;
     }
   }
 }

@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Sweepi.ProductServiceAPI.DTOs;
 using Sweepi.ProductServiceAPI.Models;
 using Sweepi.ProductServiceAPI.Repository;
-using Sweepi.ProductServiceAPI.Mappers;
 
 namespace Sweepi.ProductServiceAPI.Controllers
 {
@@ -20,32 +19,18 @@ namespace Sweepi.ProductServiceAPI.Controllers
         _repository = repository;
     }
 
-    [HttpGet]
-      public async Task<ActionResult<IEnumerable<Product>>> Get()
-      {
-        IEnumerable<Product> products = await _repository.GetAll();
-
-        return Ok(products.Select(p => p.MapToReadDto()));
-      }
-
       [HttpGet]
-      [Route("{id}", Name = "GetById")]
-      public async Task<ActionResult<Product>> Get(string id)
+      public ActionResult<IEnumerable<Product>> Get()
       {
-        var product = await _repository.GetById(id);
-
-        if (product == null) return NotFound();
-
-        return Ok(product.MapToReadDto());
+            return Ok(new { Message = "Nothing to see here" });
       }
 
       [HttpPut]
-      [Route("{id}")]
-      public async Task<ActionResult<Product>> Put(string id, Product product)
+      public async Task<ActionResult<Product>> Put([FromBody] Product product)
       {
         try
         {
-            if (product.Id != id) return BadRequest();
+            if (product.UserId == null) return BadRequest();
 
             await _repository.Update(product);
 
@@ -60,14 +45,14 @@ namespace Sweepi.ProductServiceAPI.Controllers
       }
 
       [HttpPost]
-      public async Task<ActionResult<Product>> Post(Product product)
+      public async Task<ActionResult<Product>> Post([FromBody] Product product)
       {
         try
         {
           if (ModelState.IsValid)
           {
             await _repository.Create(product);
-            return CreatedAtRoute("GetById", new { id = product.Id }, product.MapToCreatedDto());
+            return Created("Get", new Product { Id = product.Id, Name = product.Name, Category = product.Category });
           }
           return BadRequest();
         } 
@@ -78,13 +63,28 @@ namespace Sweepi.ProductServiceAPI.Controllers
         }
       }
 
-      [HttpDelete]
-      [Route("{id}")]
-      public async Task<ActionResult<Product>> Delete(string id)
+      [HttpPost("all")]
+      public async Task<ActionResult<List<Product>>> Post([FromBody] ProductGet request)
+      {
+            try
+            {
+                await _repository.GetById(request.UserId);
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+            var products = await _repository.GetAll(request.UserId);
+            if (products == null) return NotFound();
+            return Ok(products);
+      }
+      [HttpPost("delete")]
+      public async Task<ActionResult<Product>> Delete([FromBody] ProductRemove request)
       {
         try
         {
-            var product = await _repository.Delete(id);
+            var product = await _repository.Delete(request.Id);
 
             if (product == null) return NotFound();
 

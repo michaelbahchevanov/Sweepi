@@ -1,23 +1,162 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/users",
+            "DownstreamPathTemplate": "/api/authentication/{catchAll}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5100
+                    "Port": 42069
                 }
             ],
-            "UpstreamPathTemplate": "/users",
-            "UpstreamHttpMethod": [ "Get" ],
+            "UpstreamPathTemplate": "/auth/{catchAll}",
+            "UpstreamHttpMethod": [ "Post" ],
+            "RateLimitOptions": {
+                "EnableRateLimiting": true,
+                "Period": "1h",
+                "PeriodTimespan": 2,
+                "Limit": 1
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/authentication/refresh",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 42069
+                }
+            ],
+            "UpstreamPathTemplate": "/refresh",
+            "UpstreamHttpMethod": [ "Post" ],
             "AuthenticationOptions": {
                 "AuthenticationProviderKey": "Bearer",
                 "AllowedScopes": []
+            },
+            "RateLimitOptions": {
+                "EnableRateLimiting": true,
+                "Period": "5m",
+                "PeriodTimespan": 2,
+                "Limit": 1
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/images",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6969
+                }
+            ],
+            "UpstreamPathTemplate": "/images",
+            "UpstreamHttpMethod": [ "Post" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RateLimitOptions": {
+                "EnableRateLimiting": true,
+                "Period": "1h",
+                "PeriodTimespan": 2,
+                "Limit": 1
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/images/all",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6969
+                }
+            ],
+            "UpstreamPathTemplate": "/user/images",
+            "UpstreamHttpMethod": [ "Post" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RateLimitOptions": {
+                "EnableRateLimiting": true,
+                "Period": "5m",
+                "PeriodTimespan": 1,
+                "Limit": 1
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/images",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 6969
+                }
+            ],
+            "UpstreamPathTemplate": "/images",
+            "UpstreamHttpMethod": [ "Delete" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RateLimitOptions": {
+                "EnableRateLimiting": true,
+                "Period": "1h",
+                "PeriodTimespan": 1,
+                "Limit": 1
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/products/{catchAll}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5300
+                }
+            ],
+            "UpstreamPathTemplate": "/products/{catchAll}",
+            "UpstreamHttpMethod": [ "Post" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RateLimitOptions": {
+                "EnableRateLimiting": true,
+                "Period": "1h",
+                "PeriodTimespan": 1,
+                "Limit": 1
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/{catchAll}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5300
+                }
+            ],
+            "UpstreamPathTemplate": "/{catchAll}",
+            "UpstreamHttpMethod": [ "Post", "Put" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RateLimitOptions": {
+                "EnableRateLimiting": true,
+                "Period": "1h",
+                "PeriodTimespan": 1,
+                "Limit": 1
             }
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "http://localhost:3721"
+        "BaseUrl": "http://localhost:3721",
+        "RateLimitOptions": {
+            "DisableRateLimitHeaders": false,
+            "QuotaExceededMessage": "Too many requests",
+            "HttpStatusCode": 429
+        }
     }
 }
