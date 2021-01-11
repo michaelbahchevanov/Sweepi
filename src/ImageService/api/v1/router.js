@@ -12,7 +12,7 @@ router.post('/images', async (req, res, next) => {
       ImageUrl: data.imageUrl,
     });
     const createdEntry = await image.save();
-    res.json(createdEntry);
+    return res.json(createdEntry);
   } catch (error) {
     next(error);
   }
@@ -22,14 +22,14 @@ router.delete('/images', async (req, res, next) => {
   try {
     const data = req.body;
 
-    if (!data.id) res.sendStatus(400);
+    if (!data.id) return res.sendStatus(400);
 
     const image = await imageModel.findById({ _id: data.id });
 
-    if (!image) res.sendStatus(404);
+    if (!image) return res.sendStatus(404);
 
     await image.remove();
-    res.sendStatus(204);
+    return res.sendStatus(204);
   } catch (error) {
     next(error);
   }
@@ -38,13 +38,12 @@ router.delete('/images', async (req, res, next) => {
 router.post('/images/all', async (req, res, next) => {
   try {
     const userId = req.body.userId;
-    const data = await imageModel.findOne({ UserId: userId });
+    if (!userId) return res.sendStatus(400);
+    const data = await imageModel.find({ UserId: { $in: userId } });
 
-    if (!data) res.status(400).json({ errorMessage: 'Bad Request' });
+    if (!data) return res.status(400).json({ errorMessage: 'Bad Request' });
 
-    return await res
-      .status(200)
-      .json({ imageUrl: data.ImageUrl, id: data._id });
+    return await res.status(200).json(data);
   } catch (error) {
     next(error);
   }
@@ -53,7 +52,7 @@ router.post('/images/all', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     const message = { message: 'This is the index page 🚀🚀🚀' };
-    res.status(200).json(message);
+    return res.status(200).json(message);
   } catch (error) {
     next(error);
   }

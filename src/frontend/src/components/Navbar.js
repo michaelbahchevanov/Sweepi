@@ -1,5 +1,6 @@
 import React from 'react';
 import { Logo } from '../images/Logo';
+import { LogoutButton } from '@components';
 
 export const Navbar = () => {
   return (
@@ -19,7 +20,7 @@ export const Navbar = () => {
           className='absolute right-0 top-0 mt-5 mr-4'
         ></button>
       </div>
-      <div className='xs:text-xs text-xl self-center'>Logout</div>
+      <LogoutButton className='xs:text-xs text-xl self-center hover:cursor-pointer' />
     </nav>
   );
 };

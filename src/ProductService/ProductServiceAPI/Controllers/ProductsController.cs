@@ -66,27 +66,18 @@ namespace Sweepi.ProductServiceAPI.Controllers
       [HttpPost("all")]
       public async Task<ActionResult<List<Product>>> Post([FromBody] ProductGet request)
       {
-            try
-            {
-                await _repository.GetById(request.UserId);
-            }
-            catch
-            {
-                return NotFound();
-            }
-
             var products = await _repository.GetAll(request.UserId);
-            if (products == null) return NotFound();
+            if (products == null) return new List<Product>();
             return Ok(products);
       }
-      [HttpPost("delete")]
-      public async Task<ActionResult<Product>> Delete([FromBody] ProductRemove request)
+      [HttpDelete("{id}")]
+      public async Task<ActionResult<Product>> Delete(string id)
       {
         try
         {
-            var product = await _repository.Delete(request.Id);
+            var product = await _repository.Delete(id);
 
-            if (product == null) return NotFound();
+            if (product == null) return BadRequest();
 
             return NoContent();
         }

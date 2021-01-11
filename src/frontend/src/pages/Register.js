@@ -3,9 +3,28 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Logo } from '../images/Logo.js';
 import { authService } from '@services';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      'Must contain lowercase, uppercase, number and special character'
+    )
+    .required(),
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Password confirm is required'),
+});
 
 export const Register = ({ history }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (data, e) => {
     e.preventDefault();
@@ -14,6 +33,7 @@ export const Register = ({ history }) => {
     authService
       .register(data.email, data.password)
       .then(() => history.push('/'))
+      .then(() => window.location.reload())
       .catch((error) => console.log(error));
   };
 
@@ -36,6 +56,9 @@ export const Register = ({ history }) => {
             name='email'
             placeholder='Email'
           />
+          <p className=' text-yellow-400 font-normal italic mb-2'>
+            {errors.email?.message}
+          </p>
 
           <input
             type='password'
@@ -44,13 +67,21 @@ export const Register = ({ history }) => {
             name='password'
             placeholder='Password'
           />
+          <p className=' text-yellow-400 font-normal italic mb-2'>
+            {errors.password?.message}
+          </p>
 
           <input
             type='password'
+            ref={register}
             className='block border border-gray-300 w-full p-3 rounded mb-4 bg-gray-100 focus:bg-gray-50 focus:outline-none focus:border-gray-600'
-            name='password'
+            name='passwordConfirmation'
             placeholder='Confirm Password'
           />
+          <p className=' text-yellow-400 font-normal italic mb-2'>
+            {errors.passwordConfirmation?.message}
+          </p>
+
           <button
             type='submit'
             className='w-full text-center py-3 rounded bg-yellow-500 text-black hover:bg-green-dark focus:outline-none my-1'

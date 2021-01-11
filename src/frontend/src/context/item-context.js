@@ -1,25 +1,25 @@
 import * as React from 'react';
-import { mediaService, userService } from '@services';
+import { itemService, userService } from '@services';
 
-const MediaContext = React.createContext();
+const ItemContext = React.createContext();
 const userId = userService.getUserId();
 
-function MediaProvider({ children }) {
+function ItemProvider({ children }) {
   const [state, setState] = React.useState({
     status: 'pending',
     error: null,
-    media: [],
+    items: [],
   });
 
   React.useEffect(() => {
-    mediaService.getMedia(userId).then(
-      (media) => setState({ status: 'success', error: null, media }),
-      (error) => setState({ status: 'error', error, media: [] })
+    itemService.getItems(userId).then(
+      (items) => setState({ status: 'success', error: null, items }),
+      (error) => setState({ status: 'error', error, items: [] })
     );
   }, []);
 
   return (
-    <MediaContext.Provider value={state}>
+    <ItemContext.Provider value={state}>
       {state.status === 'pending' ? (
         'Loading...'
       ) : state.status === 'error' ? (
@@ -32,12 +32,12 @@ function MediaProvider({ children }) {
       ) : (
         children
       )}
-    </MediaContext.Provider>
+    </ItemContext.Provider>
   );
 }
 
-function useMedia() {
-  const state = React.useContext(MediaContext);
+function useItem() {
+  const state = React.useContext(ItemContext);
   const isPending = state.status === 'pending';
   const isError = state.status === 'error';
   const isSuccess = state.status === 'success';
@@ -49,4 +49,4 @@ function useMedia() {
   };
 }
 
-export { MediaProvider, useMedia };
+export { ItemProvider, useItem };

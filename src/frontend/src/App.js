@@ -1,14 +1,15 @@
 import React from 'react';
-import { useAuthState, MediaProvider } from './context';
+import { useAuthState, MediaProvider, ItemProvider } from './context';
+import Compose from './context/compose';
 import { AuthenticatedApp } from './AuthenticatedApp';
 import { UnauthenticatedApp } from './UnauthenticatedApp';
 
 export const App = () => {
   const { user } = useAuthState();
   return user ? (
-    <MediaProvider>
+    <Compose components={[MediaProvider, ItemProvider]}>
       <AuthenticatedApp />
-    </MediaProvider>
+    </Compose>
   ) : (
     <UnauthenticatedApp />
   );

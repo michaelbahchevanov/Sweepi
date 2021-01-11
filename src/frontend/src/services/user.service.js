@@ -1,5 +1,6 @@
-const getUserId = async () => {
-  const data = await JSON.parse(localStorage.getItem('user'));
+const getUserId = () => {
+  const data = JSON.parse(localStorage.getItem('user'));
+  if (!data) return;
   return data.userId;
 };
 

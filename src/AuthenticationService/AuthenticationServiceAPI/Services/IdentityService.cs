@@ -181,7 +181,7 @@ namespace Sweepi.AuthenticationServiceAPI.Services
             try
             {
                 var tokenValidationParameters = _tokenValidationParameters.Clone();
-                tokenValidationParameters.ValidateLifetime = false;
+                tokenValidationParameters.ValidateLifetime = true;
                 var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
                 if (!IsJwtWithValidSecurityAlgorithm(validatedToken))
                 {
@@ -189,9 +189,11 @@ namespace Sweepi.AuthenticationServiceAPI.Services
                 }
 
                 return principal;
+
             }
-            catch
+            catch (SecurityTokenExpiredException ex)
             {
+                Console.WriteLine(ex);
                 return null;
             }
         }

@@ -2,9 +2,18 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { authService } from '@services';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+  email: yup.string().required(),
+  password: yup.string().required(),
+});
 
 export const Login = ({ history }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (data, e) => {
     e.preventDefault();
@@ -12,8 +21,8 @@ export const Login = ({ history }) => {
 
     authService
       .login(data.email, data.password)
-      .then((res) => console.log(res))
       .then(() => history.push('/'))
+      .then(() => window.location.reload())
       .catch((error) => console.log(error));
   };
 
@@ -33,6 +42,9 @@ export const Login = ({ history }) => {
             name='email'
             placeholder='Email'
           />
+          <p className=' text-yellow-400 font-normal italic mb-2'>
+            {errors.email?.message}
+          </p>
 
           <input
             type='password'
@@ -41,6 +53,9 @@ export const Login = ({ history }) => {
             name='password'
             placeholder='Password'
           />
+          <p className=' text-yellow-400 font-normal italic mb-2'>
+            {errors.password?.message}
+          </p>
 
           <button
             type='submit'

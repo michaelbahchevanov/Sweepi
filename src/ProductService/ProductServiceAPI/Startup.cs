@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sweepi.ProductServiceAPI.Config;
 using Sweepi.ProductServiceAPI.Data;
 using Sweepi.ProductServiceAPI.Repository;
 
@@ -45,6 +46,8 @@ namespace ProductServiceAPI
             {
                 endpoints.MapControllers();
             });
+
+            app.MigrateDatabase();
         }
     }
 }
